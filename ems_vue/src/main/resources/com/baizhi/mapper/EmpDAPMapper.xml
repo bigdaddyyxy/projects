@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.dao.EmpDAO">
+
+    <cache type="com.baizhi.cache.RedisCache"/>
+
+<!--    findAll     -->
+    <select id="findAll" resultType="Employee">
+        select id, name, path, salary, age
+        from emp.t_emp
+    </select>
+
+<!--    findOne     -->
+    <select id="findOne" resultType="com.baizhi.entity.Employee">
+        select id, name, path, salary, age
+        from emp.t_emp
+        where id=#{id}
+    </select>
+
+<!--    save        -->
+    <insert id="save" parameterType="Employee" useGeneratedKeys="true" keyProperty="id">
+        insert into emp.t_emp
+        values (#{id},#{name},#{path},#{salary},#{age})
+    </insert>
+
+<!--    delete  -->
+    <delete id="deleteById" parameterType="String">
+        delete from emp.t_emp
+        where emp.t_emp.id = #{id}
+    </delete>
+
+<!--update-->
+    <update id="update" parameterType="Employee">
+        update emp.t_emp
+        set   name=#{name}, path=#{path}, salary=#{salary}, age=#{age}
+        where id=#{id}
+    </update>
+</mapper>
